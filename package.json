@@ -1,0 +1,19 @@
+{
+  "name": "planing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangxiaohuan8/Planing.git"
+  },
+  "author": "zhangxiaohuan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhangxiaohuan8/Planing/issues"
+  },
+  "homepage": "https://github.com/zhangxiaohuan8/Planing#readme"
+}
