@@ -21,21 +21,37 @@ function Box(){
         cfg = {
                 container:'.box',
                 left:-1200,
+                new:0
         },
-        timer;
+        timer,
+        num,
+        right1,
+        left1;
     function left(){
         if((cfg.left/(-1200))==1){
             $('#li4').attr('class',"active");
         }
+        if(cfg.left==0){
+            $('#li3').attr('class',"active");
+            $('#li4').removeAttr('class');
+        }
         $('#li'+(cfg.left/(-1200)-2)).attr('class',"active");
         $('#li'+(cfg.left/(-1200)-1)).removeAttr('class');
-        if(cfg.left==-1200){
-            cfg.left=-7200;
-        }
-        cfg.left=cfg.left+1200;
-        $('#slider').css({
-            left:cfg.left+'px'
-        })
+        left1=setInterval(function(){
+            cfg.left=cfg.left+25;
+            cfg.new+=25;
+            $('#slider').css({
+                left:cfg.left+'px'
+            })
+            if(cfg.left==0){
+                cfg.left=-6000;
+            }
+            if(cfg.new==1200){
+                clearInterval(left1);
+                cfg.new=0;
+                return ;
+            }
+        },10);
     }
     function right(){
         if((cfg.left/(-1200))==5){
@@ -47,39 +63,59 @@ function Box(){
         }
         $('#li'+(cfg.left/(-1200))).attr('class',"active");
         $('#li'+(cfg.left/(-1200)-1)).removeAttr('class');
-        if(cfg.left==-1200){
-            cfg.left=-1200
-        }
-        if(cfg.left==-7200){
-            cfg.left=-1200
-        }
-        cfg.left=cfg.left-1200;
-        $('#slider').css({
-            left:cfg.left+'px'
-        })
+        right1=setInterval(function(){
+            cfg.left=cfg.left-25;
+            cfg.new+=25;
+            $('#slider').css({
+                left:cfg.left+'px'
+            })
+            if(cfg.left==-7200){
+                cfg.left=-1200;
+            }
+            if(cfg.new==1200){
+                clearInterval(right1);
+                cfg.new=0;
+                return ;
+            }
+        },10);
     }
     function hover(){
         $('#left').attr('style','opacity:0.5')
         $('#right').attr('style','opacity:0.5')
-        clearInterval(timer);
+        clear()
     }
-    function out(){
-        $('#left').removeAttr('style')
-        $('#right').removeAttr('style')
+    function time(){
         timer=setInterval(function(){
             if((cfg.left/(-1200))==5){
                 $('#li0').attr('class',"active");
             }
             $('#li'+(cfg.left/(-1200))).attr('class',"active");
             $('#li'+(cfg.left/(-1200)-1)).removeAttr('class');
-            cfg.left=cfg.left-1200;
             $('#slider').css({
                 left:cfg.left+'px'
             })
-            if(cfg.left==-7200){
-                cfg.left=-1200
-            }
+            clearInterval(num);
+            num=setInterval(function(){
+                cfg.left-=25;
+                $('#slider').css({
+                    left:cfg.left+'px'
+                })
+                if(-cfg.left%1200==0){
+                    clearInterval(num);
+                }
+                if(cfg.left==-7200){
+                    cfg.left=-1200;
+                }
+            },10);
         },3000)
+    }
+    function clear(){
+        clearInterval(timer);
+    }
+    function out(){
+        $('#left').removeAttr('style')
+        $('#right').removeAttr('style');
+        time();
     }
     function li(){
         var li=$('li');
@@ -108,24 +144,11 @@ function Box(){
         $.extend(cfg,conf);
         $(cfg.container).append($box);
         $('#li0').attr('class',"active");
-        timer=setInterval(function(){
-            if((cfg.left/(-1200))==5){
-                $('#li0').attr('class',"active");
-            }
-            $('#li'+(cfg.left/(-1200))).attr('class',"active");
-            $('#li'+(cfg.left/(-1200)-1)).removeAttr('class');
-            cfg.left=cfg.left-1200;
-            $('#slider').css({
-                left:cfg.left+'px'
-            })
-            if(cfg.left==-7200){
-                cfg.left=-1200
-            }
-        },3000)
+        time()
         $('#box').mouseover(hover);
         $('#box').mouseout(out);
-        $('#left').click(left);
         $('#right').click(right);
-        li();
+        $('#left').click(left);
+        li()
     }
 }
