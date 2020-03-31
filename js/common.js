@@ -21,7 +21,8 @@ function Box(){
         cfg = {
                 container:'.box',
                 left:-1200,
-                new:0
+                new:0,
+                time:0
         },
         timer,
         num,
@@ -92,7 +93,7 @@ function Box(){
         $('#right').attr('style','opacity:0.5')
         clear()
     }
-    function time(){
+    function time(a){
         timer=setInterval(function(){
             if((cfg.left/(-1200))==5){
                 $('#li0').attr('class',"active");
@@ -115,7 +116,7 @@ function Box(){
                     cfg.left=-1200;
                 }
             },10);
-        },3000)
+        },a)
     }
     function clear(){
         clearInterval(timer);
@@ -123,7 +124,7 @@ function Box(){
     function out(){
         $('#left').removeAttr('style')
         $('#right').removeAttr('style');
-        time();
+        time(cfg.time);
     }
     function li(){
         var li=$('li');
@@ -152,7 +153,7 @@ function Box(){
         $.extend(cfg,conf);
         $(cfg.container).append($box);
         $('#li0').attr('class',"active");
-        time()
+        time(cfg.time)
         $('#box').mouseover(hover);
         $('#box').mouseout(out);
         $('#right').click(right);
