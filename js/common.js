@@ -46,9 +46,13 @@ function Box(){
             if(cfg.left==0){
                 cfg.left=-6000;
             }
+            if(cfg.new!=1200&&cfg.new!=25){
+                $('#left').off('click');
+            }
             if(cfg.new==1200){
                 clearInterval(left1);
                 cfg.new=0;
+                $('#left').on('click',left)
                 return ;
             }
         },10);
@@ -72,9 +76,13 @@ function Box(){
             if(cfg.left==-7200){
                 cfg.left=-1200;
             }
+            if(cfg.new!=1200&&cfg.new!=25){
+                $('#right').off('click');
+            }
             if(cfg.new==1200){
                 clearInterval(right1);
                 cfg.new=0;
+                $('#right').on('click',right)
                 return ;
             }
         },10);
